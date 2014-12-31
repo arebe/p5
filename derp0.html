@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+	<meta charset="UTF-8" />
+        <title>p5 derp</title>
+
+    <script src="libs/p5.min.js"></script>
+    <script src="libs/p5.sound.min.js"></script>
+
+</head>
+
+<body>
+    <header>
+          aw yeah
+    </header>
+<script>
+// moire
+var nLines = 20;
+var rot = 0;
+
+var nLines2 = 20;
+var rot2 = 45;
+
+// audio
+var input;
+var analyzer;
+var mic;
+var fft;
+var amplitude
+
+function setup(){
+    createCanvas(windowWidth, windowHeight);
+    fill(0);
+
+    mic = new p5.AudioIn();
+    mic.start();
+    fft = new p5.FFT();
+    amplitude = new p5.Amplitude();
+    amplitude.setInput(mic);
+    fft.setInput(mic);
+
+}
+
+function draw(){
+    fill(255);
+    rectMode(CORNER);
+    rect(0, 0, width, height);
+
+    var spectrum = fft.analyze();
+    var bassNrg = fft.getEnergy("bass");
+    var level = amplitude.getLevel();
+
+    var stw = map(bassNrg, 0, 100, 5, (width/nLines)-2);
+    var stw2 = map(bassNrg, 0, 100, (width/nLines)-2, 1);
+
+    var lineW = width+height;
+    var lineH = height+width;
+
+
+    noFill();
+    stroke(0);
+ 
+    push();
+    strokeWeight(stw);
+    translate(width/2, height/2);
+    rotate(radians(rot));   
+    for(var i=0; i < lineW; i+=lineW/nLines){
+        line(i-(lineW/2), -lineH/2, i-(lineW/2), lineH/2);
+    }
+    rot++;
+    pop();
+
+
+    fill(255, 10, 180);
+    strokeWeight(1);
+    textFont("Impact");
+    textSize(120);
+    rectMode(CORNER);
+    var tH= 90;
+    for(var i = 0; i < 10; i++){
+        text("#FESTIVE", (width-500), tH);
+        tH+=height/10;
+
+    }
+
+    push();
+    strokeWeight(stw2);
+    translate(width/2, height/2);
+    rotate(radians(rot2));   
+    for(var i=0; i < lineW; i+=lineW/nLines){
+        line(i-(lineW/2), -lineH/2, i-(lineW/2), lineH/2);
+    }
+    rot2+=random(0.1, 0.7);
+    pop();
+
+
+    
+    // text("level: "+level, width-400, 50);
+    // text("bassNrg: "+bassNrg, width-400, 50);
+}
+
+
+</script>
+</body>
+</html>
