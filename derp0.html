@@ -21,7 +21,7 @@
     </header>
 <script>
 // moire
-var nLines = 20;
+var nLines = 60;
 var rot = 0;
 
 var nLines2 = 20;
@@ -48,7 +48,7 @@ function setup(){
 }
 
 function draw(){
-    fill(255);
+    fill(0);
     rectMode(CORNER);
     rect(0, 0, width, height);
 
@@ -56,15 +56,17 @@ function draw(){
     var bassNrg = fft.getEnergy("bass");
     var level = amplitude.getLevel();
 
-    var stw = map(bassNrg, 0, 100, 5, (width/nLines)-2);
-    var stw2 = map(bassNrg, 0, 100, (width/nLines)-2, 1);
+    var maxLineW = (width/nLines)-50;
+
+    var stw = map(bassNrg, 0, 100, 50, maxLineW);
+    var stw2 = map(bassNrg, 0, 100, maxLineW, 10);
 
     var lineW = width+height;
     var lineH = height+width;
 
 
     noFill();
-    stroke(0);
+    stroke(255);
  
     push();
     strokeWeight(stw);
@@ -79,6 +81,7 @@ function draw(){
 
     fill(255, 10, 180);
     strokeWeight(1);
+    stroke(0);
     textFont("Impact");
     textSize(120);
     rectMode(CORNER);
@@ -88,7 +91,7 @@ function draw(){
         tH+=height/10;
 
     }
-
+    stroke(0);
     push();
     strokeWeight(stw2);
     translate(width/2, height/2);
