@@ -56,10 +56,10 @@ function draw(){
     var bassNrg = fft.getEnergy("bass");
     var level = amplitude.getLevel();
 
-    var maxLineW = (width/nLines)-50;
+    var maxLineW = (width/nLines)-10;
 
-    var stw = map(bassNrg, 0, 100, 50, maxLineW);
-    var stw2 = map(bassNrg, 0, 100, maxLineW, 10);
+    var stw = map(bassNrg, 0, 255, 50, maxLineW);
+    var stw2 = map(bassNrg, 0, 255, maxLineW, 10);
 
     var lineW = width+height;
     var lineH = height+width;
@@ -75,7 +75,7 @@ function draw(){
     for(var i=0; i < lineW; i+=lineW/nLines){
         line(i-(lineW/2), -lineH/2, i-(lineW/2), lineH/2);
     }
-    rot++;
+    rot+=0.2;
     pop();
 
 
@@ -99,7 +99,7 @@ function draw(){
     for(var i=0; i < lineW; i+=lineW/nLines){
         line(i-(lineW/2), -lineH/2, i-(lineW/2), lineH/2);
     }
-    rot2+=random(0.1, 0.7);
+    rot2+=random(0.1, 1.5);
     pop();
 
 
